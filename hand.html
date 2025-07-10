@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>美化版姿勢辨識器</title>
+    <title>手勢識別應用</title>
     <style>
         body {
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 20px;
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #87CEEB 0%, #98FB98 100%);
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
@@ -17,148 +17,73 @@
 
         /* 向日葵背景裝飾 */
         .sunflower {
-            position: absolute;
+            position: fixed;
             font-size: 60px;
-            opacity: 0.2;
-            animation: sway 4s ease-in-out infinite;
-            z-index: 1;
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: -1;
         }
 
-        .sunflower:nth-child(1) {
-            top: 8%;
-            left: 3%;
-            animation-delay: 0s;
-        }
-
-        .sunflower:nth-child(2) {
-            top: 65%;
-            right: 8%;
-            animation-delay: 1.2s;
-        }
-
-        .sunflower:nth-child(3) {
-            bottom: 15%;
-            left: 12%;
-            animation-delay: 2.4s;
-        }
-
-        .sunflower:nth-child(4) {
-            top: 25%;
-            right: 25%;
-            animation-delay: 1.8s;
-        }
-
-        .sunflower:nth-child(5) {
-            top: 80%;
-            left: 45%;
-            animation-delay: 3s;
-        }
-
-        .sunflower:nth-child(6) {
-            top: 40%;
-            left: 8%;
-            animation-delay: 0.6s;
-        }
-
-        @keyframes sway {
-            0%, 100% { transform: rotate(-8deg) scale(1); }
-            50% { transform: rotate(8deg) scale(1.05); }
-        }
+        .sunflower:nth-child(1) { top: 10%; left: 10%; transform: rotate(15deg); }
+        .sunflower:nth-child(2) { top: 20%; right: 15%; transform: rotate(-20deg); }
+        .sunflower:nth-child(3) { bottom: 15%; left: 20%; transform: rotate(45deg); }
+        .sunflower:nth-child(4) { bottom: 25%; right: 10%; transform: rotate(-30deg); }
+        .sunflower:nth-child(5) { top: 60%; left: 5%; transform: rotate(60deg); }
 
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
-            position: relative;
-            z-index: 10;
             background: rgba(255, 255, 255, 0.95);
-            border-radius: 25px;
-            padding: 40px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
         }
 
         h1 {
             text-align: center;
             color: #2c3e50;
             margin-bottom: 30px;
-            font-size: 2.8em;
-            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .model-info {
-            text-align: center;
-            margin-bottom: 25px;
-            padding: 15px;
-            background: linear-gradient(45deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
-            border-radius: 15px;
-            color: #2c3e50;
-            font-size: 1em;
-            border: 2px solid rgba(102, 126, 234, 0.2);
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .controls {
             display: flex;
             justify-content: center;
-            gap: 25px;
+            gap: 20px;
             margin-bottom: 30px;
         }
 
         .btn {
-            padding: 15px 35px;
-            font-size: 16px;
+            padding: 15px 30px;
+            font-size: 18px;
             border: none;
-            border-radius: 30px;
+            border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.5s;
-        }
-
-        .btn:hover::before {
-            left: 100%;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         .btn-start {
             background: linear-gradient(45deg, #FF6B6B, #FF8E8E);
             color: white;
-            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
         }
 
         .btn-start:hover {
-            background: linear-gradient(45deg, #FF5252, #FF7979);
             transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.4);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
         }
 
         .btn-stop {
-            background: linear-gradient(45deg, #95A5A6, #BDC3C7);
+            background: linear-gradient(45deg, #6C5CE7, #A29BFE);
             color: white;
-            box-shadow: 0 4px 15px rgba(149, 165, 166, 0.3);
         }
 
         .btn-stop:hover {
-            background: linear-gradient(45deg, #7F8C8D, #95A5A6);
             transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(149, 165, 166, 0.4);
+            box-shadow: 0 6px 20px rgba(108, 92, 231, 0.4);
         }
 
         .btn:disabled {
@@ -173,233 +98,143 @@
             align-items: flex-start;
         }
 
-        .video-section {
-            flex: 1.2;
+        .webcam-section {
+            flex: 1;
             text-align: center;
         }
 
-        .video-container {
+        .webcam-container {
             position: relative;
             display: inline-block;
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
-            background: #000;
-            border: 3px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            background: #f8f9fa;
         }
 
-        #canvas {
-            display: block;
-            border-radius: 17px;
-            width: 500px !important;
-            height: 500px !important;
+        .webcam-container canvas {
+            width: 400px !important;
+            height: 400px !important;
+            border-radius: 20px;
         }
 
         .predictions-section {
             flex: 1;
-            min-width: 350px;
+            min-width: 300px;
         }
 
         .predictions-title {
-            font-size: 1.8em;
+            font-size: 1.5em;
             color: #2c3e50;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             text-align: center;
-            font-weight: bold;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
 
         .prediction-item {
-            margin-bottom: 20px;
-            background: rgba(255, 255, 255, 0.9);
+            margin-bottom: 15px;
+            background: white;
             border-radius: 15px;
-            padding: 15px 20px;
-            transition: all 0.3s ease;
-            border-left: 6px solid #ddd;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .prediction-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.6s;
-        }
-
-        .prediction-item:hover::before {
-            transform: translateX(100%);
+            padding: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
         }
 
         .prediction-item:hover {
-            transform: translateX(8px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-        }
-
-        .prediction-item.rank-1 {
-            border-left-color: #e74c3c;
-            background: linear-gradient(135deg, rgba(231, 76, 60, 0.15), rgba(255, 255, 255, 0.9));
-            box-shadow: 0 5px 20px rgba(231, 76, 60, 0.2);
-        }
-
-        .prediction-item.rank-2 {
-            border-left-color: #f39c12;
-            background: linear-gradient(135deg, rgba(243, 156, 18, 0.15), rgba(255, 255, 255, 0.9));
-            box-shadow: 0 5px 20px rgba(243, 156, 18, 0.2);
+            transform: translateY(-2px);
         }
 
         .prediction-label {
+            font-size: 16px;
             font-weight: bold;
-            color: #2c3e50;
             margin-bottom: 8px;
-            font-size: 1.2em;
+            color: #2c3e50;
+        }
+
+        .prediction-bar-container {
+            width: 100%;
+            height: 20px;
+            background: #ecf0f1;
+            border-radius: 10px;
+            overflow: hidden;
             position: relative;
-            z-index: 2;
         }
 
         .prediction-bar {
-            width: 100%;
-            height: 25px;
-            background: rgba(236, 240, 241, 0.8);
-            border-radius: 12px;
-            overflow: hidden;
-            position: relative;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .prediction-fill {
             height: 100%;
-            transition: width 0.5s ease;
-            border-radius: 12px;
+            border-radius: 10px;
+            transition: width 0.3s ease;
             position: relative;
-            background-size: 20px 20px;
-            background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.1) 75%, transparent 75%, transparent);
-            animation: slide 1s linear infinite;
         }
 
-        @keyframes slide {
-            0% { background-position: 0 0; }
-            100% { background-position: 20px 0; }
+        .prediction-bar.highest {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
         }
 
-        .prediction-fill.rank-1 {
-            background-color: #e74c3c;
-            box-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+        .prediction-bar.second {
+            background: linear-gradient(45deg, #f39c12, #d68910);
         }
 
-        .prediction-fill.rank-2 {
-            background-color: #f39c12;
-            box-shadow: 0 0 10px rgba(243, 156, 18, 0.5);
-        }
-
-        .prediction-fill.rank-other {
-            background-color: #95a5a6;
-            animation: none;
+        .prediction-bar.other {
+            background: linear-gradient(45deg, #95a5a6, #7f8c8d);
         }
 
         .prediction-percentage {
             position: absolute;
-            right: 12px;
+            right: 10px;
             top: 50%;
             transform: translateY(-50%);
             color: white;
+            font-size: 12px;
             font-weight: bold;
-            font-size: 1em;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-            z-index: 3;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
         }
 
-        .status {
+        .loading {
             text-align: center;
-            margin-top: 25px;
-            padding: 18px;
-            border-radius: 15px;
-            font-weight: bold;
-            font-size: 1.2em;
-            border: 3px solid;
-            position: relative;
-            overflow: hidden;
+            color: #7f8c8d;
+            font-size: 18px;
+            margin-top: 50px;
         }
 
-        .status::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 2s;
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 10px;
+            background: #e74c3c;
         }
 
-        .status.running::before {
-            left: 100%;
-            animation: statusShine 2s linear infinite;
+        .status-indicator.active {
+            background: #27ae60;
+            animation: pulse 2s infinite;
         }
 
-        @keyframes statusShine {
-            0% { left: -100%; }
-            100% { left: 100%; }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
         }
 
-        .status.waiting {
-            background: linear-gradient(45deg, rgba(52, 152, 219, 0.1), rgba(52, 152, 219, 0.05));
-            color: #3498db;
-            border-color: #3498db;
-        }
-
-        .status.running {
-            background: linear-gradient(45deg, rgba(46, 204, 113, 0.1), rgba(46, 204, 113, 0.05));
-            color: #2ecc71;
-            border-color: #2ecc71;
-        }
-
-        .status.stopped {
-            background: linear-gradient(45deg, rgba(231, 76, 60, 0.1), rgba(231, 76, 60, 0.05));
-            color: #e74c3c;
-            border-color: #e74c3c;
-        }
-
-        .pose-info {
-            margin-top: 20px;
-            padding: 15px;
-            background: linear-gradient(45deg, rgba(155, 89, 182, 0.1), rgba(142, 68, 173, 0.1));
-            border-radius: 10px;
+        .webcam-status {
             text-align: center;
-            color: #8e44ad;
-            font-size: 0.9em;
-            border: 1px solid rgba(155, 89, 182, 0.3);
+            margin-top: 15px;
+            color: #7f8c8d;
         }
 
         @media (max-width: 768px) {
             .main-content {
                 flex-direction: column;
-                gap: 25px;
+                gap: 20px;
             }
 
-            .predictions-section {
-                min-width: unset;
-            }
-
-            #canvas {
-                width: 350px !important;
-                height: 350px !important;
-            }
-
-            .container {
-                padding: 20px;
+            .webcam-container canvas {
+                width: 300px !important;
+                height: 300px !important;
             }
 
             h1 {
-                font-size: 2.2em;
+                font-size: 2em;
             }
         }
     </style>
@@ -411,225 +246,171 @@
     <div class="sunflower">🌻</div>
     <div class="sunflower">🌻</div>
     <div class="sunflower">🌻</div>
-    <div class="sunflower">🌻</div>
 
     <div class="container">
-        <h1>🌻 美化版姿勢辨識器 🌻</h1>
-
-        <div class="model-info">
-            🤖 使用 Teachable Machine 姿勢模型進行即時動作辨識
-            <br>📍 會在影像上顯示關鍵點和骨架線條
-        </div>
+        <h1>🖐️ 手勢識別應用 🖐️</h1>
 
         <div class="controls">
-            <button class="btn btn-start" id="startBtn" onclick="init()">🎥 開始辨識</button>
-            <button class="btn btn-stop" id="stopBtn" onclick="stop()" disabled>⏹️ 停止辨識</button>
-        </div>
-
-        <div class="status waiting" id="status">
-            點擊「開始辨識」按鈕來啟動攝影機並開始姿勢辨識
+            <button id="startBtn" class="btn btn-start" onclick="init()">
+                🎥 啟動攝影機
+            </button>
+            <button id="stopBtn" class="btn btn-stop" onclick="stop()" disabled>
+                ⏹️ 停止攝影機
+            </button>
         </div>
 
         <div class="main-content">
-            <div class="video-section">
-                <div class="video-container">
-                    <canvas id="canvas"></canvas>
-                </div>
-                <div class="pose-info">
-                    💡 綠色圓點代表關鍵點，藍色線條代表骨架結構
+            <div class="webcam-section">
+                <div id="webcam-container" class="webcam-container"></div>
+                <div class="webcam-status">
+                    <span id="status-indicator" class="status-indicator"></span>
+                    <span id="status-text">攝影機未啟動</span>
                 </div>
             </div>
 
             <div class="predictions-section">
-                <div class="predictions-title">🎯 姿勢辨識結果</div>
-                <div id="label-container"></div>
+                <h3 class="predictions-title">📊 識別結果</h3>
+                <div id="label-container" class="loading">
+                    請先啟動攝影機開始識別...
+                </div>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/pose@0.8/dist/teachablemachine-pose.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
     <script type="text/javascript">
-        const URL = "https://teachablemachine.withgoogle.com/models/q__7iZ0tn/";
-        let model, webcam, ctx, labelContainer, maxPredictions;
+        const URL = "https://teachablemachine.withgoogle.com/models/X2w8dg0Hk/";
+        let model, webcam, labelContainer, maxPredictions;
         let isRunning = false;
-        let animationId;
 
         async function init() {
             if (isRunning) return;
 
             try {
-                updateStatus('正在載入姿勢辨識模型...', 'waiting');
-                updateButtons(true, false);
+                // 更新按鈕狀態
+                document.getElementById('startBtn').disabled = true;
+                document.getElementById('startBtn').innerHTML = '🔄 載入中...';
+                document.getElementById('status-text').innerHTML = '載入模型中...';
 
                 const modelURL = URL + "model.json";
                 const metadataURL = URL + "metadata.json";
 
                 // 載入模型
-                model = await tmPose.load(modelURL, metadataURL);
+                model = await tmImage.load(modelURL, metadataURL);
                 maxPredictions = model.getTotalClasses();
 
-                updateStatus('正在啟動攝影機...', 'waiting');
-
-                // 設定攝影機 - 放大尺寸
-                const size = 500;
+                // 設定攝影機
                 const flip = true;
-                webcam = new tmPose.Webcam(size, size, flip);
+                webcam = new tmImage.Webcam(400, 400, flip);
                 await webcam.setup();
                 await webcam.play();
 
-                // 設定畫布
-                const canvas = document.getElementById("canvas");
-                canvas.width = size;
-                canvas.height = size;
-                ctx = canvas.getContext("2d");
+                isRunning = true;
+                window.requestAnimationFrame(loop);
 
-                // 設定預測結果容器
+                // 更新 DOM
+                const webcamContainer = document.getElementById("webcam-container");
+                webcamContainer.innerHTML = '';
+                webcamContainer.appendChild(webcam.canvas);
+
                 labelContainer = document.getElementById("label-container");
                 labelContainer.innerHTML = '';
 
                 for (let i = 0; i < maxPredictions; i++) {
-                    const div = document.createElement("div");
-                    div.className = "prediction-item";
-                    div.innerHTML = `
-                        <div class="prediction-label">載入中...</div>
-                        <div class="prediction-bar">
-                            <div class="prediction-fill" style="width: 0%">
-                                <div class="prediction-percentage">0%</div>
+                    const predictionItem = document.createElement("div");
+                    predictionItem.className = "prediction-item";
+                    predictionItem.innerHTML = `
+                        <div class="prediction-label"></div>
+                        <div class="prediction-bar-container">
+                            <div class="prediction-bar">
+                                <div class="prediction-percentage"></div>
                             </div>
                         </div>
                     `;
-                    labelContainer.appendChild(div);
+                    labelContainer.appendChild(predictionItem);
                 }
 
-                isRunning = true;
-                updateStatus('🎯 正在進行姿勢辨識...', 'running');
-                updateButtons(false, true);
-
-                animationId = window.requestAnimationFrame(loop);
+                // 更新狀態
+                document.getElementById('startBtn').disabled = false;
+                document.getElementById('startBtn').innerHTML = '🎥 啟動攝影機';
+                document.getElementById('stopBtn').disabled = false;
+                document.getElementById('status-indicator').className = 'status-indicator active';
+                document.getElementById('status-text').innerHTML = '攝影機運行中';
 
             } catch (error) {
                 console.error('初始化失敗:', error);
-                updateStatus('❌ 啟動失敗，請重試或檢查攝影機權限', 'stopped');
-                updateButtons(false, false);
+                document.getElementById('startBtn').disabled = false;
+                document.getElementById('startBtn').innerHTML = '🎥 啟動攝影機';
+                document.getElementById('status-text').innerHTML = '啟動失敗，請重試';
             }
         }
 
-        async function loop(timestamp) {
+        async function stop() {
+            if (!isRunning) return;
+
+            if (webcam) {
+                webcam.stop();
+            }
+
+            isRunning = false;
+
+            // 清空攝影機容器
+            document.getElementById("webcam-container").innerHTML = '';
+            document.getElementById("label-container").innerHTML = '<div class="loading">請先啟動攝影機開始識別...</div>';
+
+            // 更新按鈕狀態
+            document.getElementById('stopBtn').disabled = true;
+            document.getElementById('status-indicator').className = 'status-indicator';
+            document.getElementById('status-text').innerHTML = '攝影機未啟動';
+        }
+
+        async function loop() {
             if (!isRunning) return;
 
             webcam.update();
             await predict();
-            animationId = window.requestAnimationFrame(loop);
+            window.requestAnimationFrame(loop);
         }
 
         async function predict() {
-            if (!isRunning) return;
+            if (!model || !webcam) return;
 
             try {
-                // 姿勢估計
-                const { pose, posenetOutput } = await model.estimatePose(webcam.canvas);
-                // 分類預測
-                const prediction = await model.predict(posenetOutput);
+                const prediction = await model.predict(webcam.canvas);
 
                 // 排序預測結果
-                const sortedPredictions = prediction
-                    .map((p, index) => ({ ...p, originalIndex: index }))
-                    .sort((a, b) => b.probability - a.probability);
+                const sortedPredictions = prediction.sort((a, b) => b.probability - a.probability);
 
-                // 更新預測結果顯示
                 for (let i = 0; i < maxPredictions; i++) {
-                    const predictionItem = labelContainer.childNodes[i];
-                    const sortedPred = sortedPredictions[i];
-                    const percentage = (sortedPred.probability * 100).toFixed(1);
+                    const predictionItem = labelContainer.children[i];
+                    const pred = sortedPredictions[i];
+                    const percentage = (pred.probability * 100).toFixed(1);
 
-                    // 設定排名樣式
-                    predictionItem.className = "prediction-item";
-                    if (i === 0) {
-                        predictionItem.classList.add("rank-1");
-                    } else if (i === 1) {
-                        predictionItem.classList.add("rank-2");
-                    }
-
-                    // 更新內容
+                    // 更新標籤
                     const label = predictionItem.querySelector('.prediction-label');
-                    const fill = predictionItem.querySelector('.prediction-fill');
-                    const percentageSpan = predictionItem.querySelector('.prediction-percentage');
+                    label.textContent = pred.className;
 
-                    label.textContent = sortedPred.className;
-                    fill.style.width = percentage + '%';
-                    percentageSpan.textContent = percentage + '%';
+                    // 更新進度條
+                    const bar = predictionItem.querySelector('.prediction-bar');
+                    const percentageText = predictionItem.querySelector('.prediction-percentage');
 
-                    // 設定顏色和動畫
-                    fill.className = "prediction-fill";
+                    bar.style.width = percentage + '%';
+                    percentageText.textContent = percentage + '%';
+
+                    // 設定顏色
                     if (i === 0) {
-                        fill.classList.add("rank-1");
+                        bar.className = 'prediction-bar highest';
                     } else if (i === 1) {
-                        fill.classList.add("rank-2");
+                        bar.className = 'prediction-bar second';
                     } else {
-                        fill.classList.add("rank-other");
+                        bar.className = 'prediction-bar other';
                     }
                 }
-
-                // 繪製姿勢
-                drawPose(pose);
-
             } catch (error) {
-                console.error('預測錯誤:', error);
+                console.error('預測失敗:', error);
             }
         }
-
-        function drawPose(pose) {
-            if (webcam.canvas) {
-                ctx.drawImage(webcam.canvas, 0, 0);
-                // 繪製關鍵點和骨架
-                if (pose) {
-                    const minPartConfidence = 0.5;
-                    tmPose.drawKeypoints(pose.keypoints, minPartConfidence, ctx);
-                    tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx);
-                }
-            }
-        }
-
-        function stop() {
-            if (!isRunning) return;
-
-            isRunning = false;
-
-            if (animationId) {
-                window.cancelAnimationFrame(animationId);
-                animationId = null;
-            }
-
-            if (webcam) {
-                webcam.stop();
-                webcam = null;
-            }
-
-            // 清空畫布
-            if (ctx) {
-                ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-            }
-
-            updateStatus('⏹️ 已停止姿勢辨識', 'stopped');
-            updateButtons(false, false);
-        }
-
-        function updateStatus(message, type) {
-            const statusDiv = document.getElementById('status');
-            statusDiv.textContent = message;
-            statusDiv.className = `status ${type}`;
-        }
-
-        function updateButtons(startDisabled, stopDisabled) {
-            document.getElementById('startBtn').disabled = startDisabled;
-            document.getElementById('stopBtn').disabled = stopDisabled;
-        }
-
-        // 頁面關閉時清理資源
-        window.addEventListener('beforeunload', () => {
-            stop();
-        });
     </script>
 </body>
 </html>

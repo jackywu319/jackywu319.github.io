@@ -781,7 +781,7 @@ class MysticChatBot {
 document.addEventListener('DOMContentLoaded', function() {
     // 等待一秒確保頁面完全載入
     setTimeout(() => {
-        window.chatBot = new ChatBot();
+        window.chatBot = new MysticChatBot();
         
         // 在控制台提供清除歷史的方法
         window.clearChatHistory = () => {

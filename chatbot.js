@@ -777,4 +777,20 @@ class MysticChatBot {
     }
 }
 
-// 初始化神秘占
+// 初始化神秘占卜 ChatBot
+document.addEventListener('DOMContentLoaded', function() {
+    // 等待一秒確保頁面完全載入
+    setTimeout(() => {
+        window.chatBot = new ChatBot();
+        
+        // 在控制台提供清除歷史的方法
+        window.clearChatHistory = () => {
+            if (confirm('確定要清除所有對話歷史嗎？')) {
+                window.chatBot.clearHistory();
+            }
+        };
+        
+        console.log('ChatBot 載入完成！');
+        console.log('如需清除對話歷史，請在控制台執行：clearChatHistory()');
+    }, 1000);
+});

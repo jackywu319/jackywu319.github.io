@@ -358,7 +358,7 @@ class ChatBot {
                 
                 <div class="chatbot-panel" id="chatbotPanel">
                     <div class="chatbot-header">
-                        <div class="chatbot-title">🤖 AI 助教 v4</div>
+                        <div class="chatbot-title">🤖 AI 問神 v4</div>
                         <button class="chatbot-close" id="chatbotClose">
                             <i class="fas fa-times"></i>
                         </button>
@@ -366,7 +366,7 @@ class ChatBot {
                     
                     <div class="chat-messages" id="chatMessages">
                         <div class="message system">
-                            歡迎使用 AI 助教！我可以回答您關於欒斌教授或AI課程的任何問題。
+                            歡迎使用天靈靈地靈靈！我可以回答您關於神機妙算任何問題。
                         </div>
                     </div>
                     
@@ -515,12 +515,12 @@ class ChatBot {
                     this.showNotification();
                 }
             } else {
-                throw new Error('回應格式錯誤');
+                throw new Error('天機不可洩漏');
             }
             
         } catch (error) {
-            console.error('發送訊息時發生錯誤:', error);
-            this.addMessage('抱歉，發生了錯誤。請檢查網路連線或稍後再試。', 'error-message');
+            console.error('發送訊息時發生錯誤:天機不可洩漏', error);
+            this.addMessage('抱歉，天機不可洩漏。', 'error-message');
         } finally {
             // 隱藏打字指示器
             this.hideTypingIndicator();
@@ -584,7 +584,8 @@ class ChatBot {
         if (recentHistory.length === 0) {
             // 如果沒有歷史記錄，顯示歡迎訊息
             setTimeout(() => {
-                this.addMessage('你好，我是AI助教v4！有什麼關於欒斌教授或AI課程的問題想要問我嗎？', 'ai');
+                //this.addMessage('你好，我是AI助教v4！有什麼關於欒斌教授或AI課程的問題想要問我嗎？', 'ai');
+				this.addMessage('你好，我是天靈靈地靈靈！有什麼疑難雜症都可以問我？', 'ai');
             }, 1000);
         }
     }
